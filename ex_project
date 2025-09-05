@@ -1,0 +1,42 @@
+Project description for our university:
+
+Two sets of signal data from Class 1 and Class 2 are given to you. The length of each signal is 1024, and if from each class you have m samples, then the data dimension becomes (1024 × m). The goal of this project is to extract a number of features from the signals of Class 1 and Class 2 and, by examining these features, be able to distinguish (separate) these two signal classes.
+
+After that there is a figure whose description is:
+
+(Two matrices exist.
+One is labeled “Class 1”: each row contains 1024 numbers and there are m rows in total.
+Class 2 has a matrix with the same shape.)
+
+By extracting features from each row (each signal), depending on the number of features extracted, the signal representation changes from (1024 × m) to (number\_of\_features × m).
+For example, if the number of features to be extracted is 10, then the signal becomes (10 × m).
+
+Here you can also use feature selection methods.
+
+Using visualization techniques, observe how well the obtained features can create separability between the two classes.
+Some of these techniques:
+
+1. **Adding features incrementally.**
+   After extracting features, perform classification and compute accuracy. Then add the next feature(s) in order. At each step, by computing the accuracy, decide whether the newly added feature is useful for discrimination or not.
+
+2. **Using boxplots.**
+   Plot the features for Class 1 and Class 2 and inspect boxplot overlap. The less the overlap, the better the feature.
+
+**Note:**
+
+* For the MATLAB dataset that the instructor provides you, no preprocessing is required.
+* Research feature-extraction and feature-selection techniques and use them in the project.
+* Using matrices for the class data is because the final objective is to separate these data into Class 1 and Class 2.
+* Increasing the number of features used to compute accuracy does not necessarily increase classification accuracy.
+
+After selecting the desired features from the extracted set, feed these features to the classification network (classifier). Then, to train the model, split a portion of the data as train and a portion as test and give them to the model.
+
+**Features to be examined:**
+
+1. **Time-domain features:** Mean, Skewness, Kurtosis, Variance
+2. **Frequency-domain features:** (choose the important ones yourself)
+
+**Final goal of the project:**
+The goal of this project is to design a system that assigns each input sample the label Class 1 or Class 2.
+
+---

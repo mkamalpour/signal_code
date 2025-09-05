@@ -1,0 +1,137 @@
+This program is a **GUI-based Signal Analyzer and Classifier** with the following capabilities:
+
+---
+
+## **1. Input / Data Handling**
+
+* **Synthetic Data Generation**:
+
+  * User can generate synthetic signals for multiple classes.
+  * Parameters include total number of samples, number of classes, target class focus, and signal length (default 1024 points).
+  * The signals are simple sine waves with small random noise, with class-dependent frequencies.
+  * Automatically calculates the distribution of samples per class and shuffles data.
+
+* **Folder Loading**:
+
+  * Load signals from a folder where each subfolder corresponds to a class.
+  * Each CSV file inside a subfolder is treated as one signal.
+  * Ensures signals are exactly 1024 points (pads or trims if necessary).
+
+* **MAT-file Loading**:
+
+  * Loads `.mat` files with multiple options:
+
+    * Use user-specified keys for signals (`X`) and labels (`y`).
+    * Auto-detect variables like `X1, X2, ...` or any 2D array with dimension 1024.
+    * Reshapes, transposes, or pads signals if needed.
+    * Generates dummy labels if no label vector is found.
+  * Handles errors gracefully and logs all steps.
+
+* **Data Clearing**:
+
+  * User can clear all data, labels, features, models, and test signals.
+
+---
+
+## **2. Feature Extraction**
+
+* **Feature Calculation**:
+
+  * Supports pre-set “Basic” or “Advanced” feature sets, or user-defined features.
+  * Extracted features are stored in `self.features` and `self.feature_names`.
+  * Can visualize features with **boxplots** and **PCA** for separability inspection.
+
+* **Feature Export**:
+
+  * Features and labels can be exported to a CSV file for later use.
+
+---
+
+## **3. Model Training & Evaluation**
+
+* **Training Pipeline**:
+
+  * Optional feature selection with `SelectKBest` (ANOVA).
+  * StandardScaler to normalize features.
+  * SVM classifier with RBF kernel.
+
+* **Evaluation**:
+
+  * Splits data into train/test sets based on user-specified test size.
+  * Displays test accuracy, classification report, and confusion matrix.
+  * Optional incremental feature evaluation to rank features and see accuracy vs number of features.
+
+* **Model Export / Saving**:
+
+  * Saves the trained pipeline (model, scaler, selector) into a `.pkl` package.
+  * Includes metadata: feature names, sampling rate, and timestamp.
+  * Warns about pickle security risks.
+
+---
+
+## **4. Testing / Signal Preview**
+
+* **Test Signal Generation**:
+
+  * Generates 3 random test signals on demand.
+  * Each press regenerates fresh signals.
+  * User can view and classify a signal using the trained model.
+  * The same feature selector and scaler from training are applied.
+
+---
+
+## **5. UI / Interaction**
+
+* **Tabs**:
+
+  * Input Tab: Load/generate data.
+  * Feature Tab: Extract features.
+  * Train & Eval Tab: Train models and view evaluation.
+  * Test Tab: Test signals and view classification results.
+  * Help & Log Tab: View instructions and activity logs.
+
+* **Busy State Handling**:
+
+  * Prevents overlapping operations by disabling buttons while tasks run.
+  * Shows a progress bar during long operations.
+
+* **Buttons & Controls**:
+
+  * Buttons to generate, extract, train, test, export, clear data, clear log, and save log.
+  * Fields to configure sampling rate, number of classes, number of samples, target class, feature selection, etc.
+
+---
+
+## **6. Logging**
+
+* Logs all operations in a scrolling text box.
+* Logs can be saved to a `.txt` file.
+* Includes timestamps and messages for user actions and internal processing.
+
+---
+
+## **7. Error Handling & Messages**
+
+* Provides clear GUI messages for:
+
+  * Missing features or data.
+  * Invalid settings or keys.
+  * File save/load errors.
+* Warns about potential risks (like pickle security).
+
+---
+
+## **8. Summary**
+
+In essence, this program allows a user to:
+
+1. Load or generate signals.
+2. Extract meaningful features.
+3. Train a classifier on those features.
+4. Evaluate model performance.
+5. Test new signals with the trained model.
+6. Export features, models, and logs.
+7. Keep track of everything with a GUI-based logging system.
+
+It’s **fully GUI-driven**, with safeguards for busy states, automatic reshaping of signals, and flexible input handling.
+

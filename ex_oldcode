@@ -1,0 +1,97 @@
+## What my code tried to achive before it gets perfect (full details)
+
+### 1. **Input Data**
+
+* The user can choose how to provide the data:
+
+  1. **Synthetic Data:**
+
+     * The user specifies the number of classes (e.g., 3 classes) and the total number of samples (e.g., 100 samples).
+     * A target class is selected.
+     * A value called “Focus Strength” (between 0 and 1) is provided, which determines what percentage of the total data belongs to the target class.
+     * The remaining samples are randomly distributed among the other classes (using a Dirichlet distribution).
+     * For each class, signals are generated: a sine wave with a class-specific frequency plus random noise.
+     * Finally, the data and labels are created and shuffled together.
+     * In the UI, the user is shown what percentage of the total data each class received.
+
+  2. **Load from Folder:**
+
+     * The user selects a folder.
+     * Inside the folder, there must be one subfolder per class.
+     * Each subfolder contains CSV files, each holding a single signal of length 1024.
+     * If a signal is shorter than 1024, it is zero-padded; if it’s longer than 1024, it is truncated.
+     * Finally, all signals are read and stored along with their class labels.
+
+---
+
+### 2. **Preview**
+
+* The user can visualize the data:
+
+  * First, a plot is drawn where one random sample from each class is shown in a single figure.
+  * Then, for each class, several samples (e.g., 3) are plotted and displayed separately.
+* The goal of this section is to give the user an overall feel for the shape of the signals in each class.
+
+---
+
+### 3. **Feature Extraction**
+
+* The user can choose which features to compute from the signals.
+
+* The features are in two categories:
+
+  1. **Time-Domain Features:**
+
+     * **Mean**: the average value of the signal.
+     * **Variance**: the spread of the data.
+     * **Skewness**: the symmetry or asymmetry of the signal.
+     * **Kurtosis**: how sharp or flat the distribution of the signal values is.
+
+  2. **Frequency-Domain Features:**
+
+     * **FFT Power (total spectral power)**: the sum of squared magnitudes over the FFT spectrum.
+     * **Band Power**: the power within a specific frequency range (indices 5 to 20).
+     * **Peak Frequency**: the frequency bin with the maximum magnitude (the dominant frequency).
+
+* These features are computed for all signals, and a feature matrix is built.
+
+* Then, for each feature, a **boxplot** is drawn to show how that feature’s values differ across classes.
+
+  * If the feature is like FFT Power, the y-axis is shown on a logarithmic scale so differences are more clearly visible.
+
+---
+
+### 4. **Training**
+
+* When the features are ready:
+
+  * All features are normalized using a StandardScaler.
+  * An **SVM (Support Vector Machine)** model is created and trained on the data.
+  * The model’s **training accuracy** is computed and displayed to the user.
+
+* This trained model is kept so it can be used later on test data.
+
+---
+
+### 5. **Testing**
+
+* The program can generate **three new test signals**:
+
+  * Again, a sine wave with a random frequency plus noise is created.
+
+* For each test signal:
+
+  * A button is created; when pressed, the signal is plotted.
+  * The selected features for that signal are computed.
+  * The data is normalized using the same StandardScaler as in training.
+  * The model predicts which class the signal belongs to.
+  * Both the predicted class and the per-class probabilities (**predict\_proba**) are displayed.
+  * The extracted features are also shown in text form along with a reason for the decision (for example: “the highest probability belongs to class X”).
+
+---
+
+## Summary
+
+This program is a complete graphical (GUI) environment for **managing signal data, generating synthetic data, loading from folders, viewing and comparing signals, extracting various features, training an SVM model, and testing the model on new signals**.
+
+In other words, it covers the full workflow from **raw data → analysis → features → model → testing**.
